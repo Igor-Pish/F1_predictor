@@ -1,0 +1,9 @@
+f1-ui
+
+app/__pycache__
+
+*.pyc
+*.db
+*.env
+
+f1_cache
