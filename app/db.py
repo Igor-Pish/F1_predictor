@@ -1,11 +1,24 @@
+from __future__ import annotations
+
+from pathlib import Path
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from app.models import Base
+from sqlalchemy.orm import sessionmaker, declarative_base
 
-DB_PATH = "sqlite:///f1_ui.db"
+# SQLite файл лежит прямо в папке app/
+DB_PATH = Path(__file__).resolve().parent / "f1_data.db"
+DATABASE_URL = f"sqlite:///{DB_PATH}"
 
-engine = create_engine(DB_PATH, echo=False, future=True)
-SessionLocal = sessionmaker(bind=engine)
+engine = create_engine(
+    DATABASE_URL,
+    future=True,
+    echo=False,
+    connect_args={"check_same_thread": False},  # важно для SQLite при нескольких потоках/процессах
+)
 
-def create_db():
-    Base.metadata.create_all(engine)
+SessionLocal = sessionmaker(bind=engine, autoflush=False, autocommit=False, future=True)
+Base = declarative_base()
+
+
+def create_db() -> None:
+    from . import models  # noqa: F401
+    Base.metadata.create_all(bind=engine)

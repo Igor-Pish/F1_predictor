@@ -6,4 +6,6 @@ app/__pycache__
 *.db
 *.env
 
+UI\Web\src\dist
+
 f1_cache

@@ -1,3 +1,8 @@
-flask
-sqlalchemy
-fastf1
+Flask>=2.3
+Flask-Cors>=4.0
+SQLAlchemy>=2.0
+fastf1>=3.3
+pandas>=2.0
+
+redis>=5.0
+rq>=1.15
